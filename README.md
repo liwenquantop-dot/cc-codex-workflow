@@ -1,5 +1,7 @@
 # cc-codex-workflow
 
+**English** | [中文](README.zh-CN.md)
+
 Structured Claude Code + Codex workflow plugin. Enforces **Plan → Implement → Review → Commit** with heterogeneous review (Claude reviews Codex's diffs, Codex reviews Claude's direct fixes).
 
 > Naming: `plugin@marketplace` = `ccf@cc-codex-workflow`. `ccf` is the plugin name (from `plugin.json`); `cc-codex-workflow` is the marketplace/repo name.
