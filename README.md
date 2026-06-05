@@ -20,22 +20,38 @@ Includes bundled [OpenAI Codex](https://github.com/openai/codex) plugin — sing
 /codex:setup
 
 # 5. Verify
-/cxs
+/cc-codex-workflow:cxs
 ```
 
 ## Commands
 
+Plugin commands (namespaced):
+
 | Command | Description |
 |---|---|
-| `/cxw` | Full chain: Plan → Implement → Review → Build → Commit |
-| `/cx` | Implement only (`/codex:rescue --write`) |
-| `/cxr` | Review only |
-| `/cxa` | Adversarial review |
-| `/cxt` | Toggle auto/manual mode |
-| `/cxs` | Show current status |
+| `/cc-codex-workflow:cxw` | Full chain: Plan → Implement → Review → Build → Commit |
+| `/cc-codex-workflow:cx` | Implement only (`/codex:rescue --write`) |
+| `/cc-codex-workflow:cxr` | Review only |
+| `/cc-codex-workflow:cxa` | Adversarial review |
+| `/cc-codex-workflow:cxt` | Toggle auto/manual mode |
+| `/cc-codex-workflow:cxs` | Show current status |
 | `/codex:rescue` | Direct Codex rescue (bundled) |
 | `/codex:review` | Direct Codex review (bundled) |
 | `/codex:setup` | Codex setup (bundled) |
+
+### Short Aliases (optional)
+
+Create local commands in `~/.claude/commands/` for shorter names:
+
+```bash
+# ~/.claude/commands/cx.md
+---
+description: "Codex implement (→ /cc-codex-workflow:cx)"
+---
+Forward to /cc-codex-workflow:cx with arguments: $ARGUMENTS
+```
+
+Repeat for `cxw.md`, `cxr.md`, `cxa.md`, `cxt.md`, `cxs.md`. Then use `/cx`, `/cxw`, etc.
 
 ## Modes
 
