@@ -1,0 +1,2 @@
+description = "Toggle codex workflow mode: auto ↔ manual"
+prompt = "Toggle the codex workflow mode.\n\nRead ~/.claude/codex-workflow.json, flip the mode field:\n- \"auto\" → \"manual\"\n- \"manual\" → \"auto\"\n\nIf the file does not exist, create it with mode \"auto\".\nWrite it back and report the new state.\n\nMode meanings:\n- auto: Every task automatically runs full chain (Plan → Implement → Review → Build → Commit)\n- manual: Only run full chain when explicitly triggered via /cxw"

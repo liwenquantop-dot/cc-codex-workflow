@@ -1,0 +1,2 @@
+description = "Codex implement (short alias). Default: --write. /cx fix the bug"
+prompt = "Forward to /codex:rescue --write with user arguments.\n\nIf the user passed {{args}}, call:\n/codex:rescue --write {{args}}\n\nIf no arguments, ask what Codex should do."
