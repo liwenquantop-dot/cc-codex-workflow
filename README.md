@@ -2,18 +2,18 @@
 
 Structured codex workflow plugin for Claude Code. Enforces Plan → Implement → Review → Commit with heterogeneous review (Claude reviews Codex, Codex reviews Claude).
 
-Includes bundled [OpenAI Codex](https://github.com/openai/codex) plugin — single install, zero extra dependencies.
-
 ## Install
 
 ```bash
-# 1. Register marketplace
-/plugin marketplace add liwenquantop-dot/cc-codex-workflow
+# 1. Install codex plugin (dependency)
+/plugin marketplace add openai/codex-plugin-cc
+/plugin install codex@openai-codex
 
-# 2. Install plugin
+# 2. Install cc-codex-workflow
+/plugin marketplace add liwenquantop-dot/cc-codex-workflow
 /plugin install cc-codex-workflow@cc-codex-workflow
 
-# 3. Reload plugins
+# 3. Reload
 /reload-plugins
 
 # 4. Setup Codex (first time only)
@@ -25,19 +25,14 @@ Includes bundled [OpenAI Codex](https://github.com/openai/codex) plugin — sing
 
 ## Commands
 
-Plugin commands (namespaced):
-
 | Command | Description |
 |---|---|
 | `/cc-codex-workflow:cxw` | Full chain: Plan → Implement → Review → Build → Commit |
 | `/cc-codex-workflow:cx` | Implement only (`/codex:rescue --write`) |
-| `/cc-codex-workflow:cxr` | Review only |
-| `/cc-codex-workflow:cxa` | Adversarial review |
+| `/cc-codex-workflow:cxr` | Review only (`/codex:review`) |
+| `/cc-codex-workflow:cxa` | Adversarial review (`/codex:adversarial-review`) |
 | `/cc-codex-workflow:cxt` | Toggle auto/manual mode |
 | `/cc-codex-workflow:cxs` | Show current status |
-| `/codex:rescue` | Direct Codex rescue (bundled) |
-| `/codex:review` | Direct Codex review (bundled) |
-| `/codex:setup` | Codex setup (bundled) |
 
 ### Short Aliases (optional)
 
@@ -75,9 +70,6 @@ Same model writing and reviewing shares blind spots (confirmation bias). This wo
 
 ## Requirements
 
+- [codex plugin](https://github.com/openai/codex-plugin-cc) (`/codex:rescue`, `/codex:review`, `/codex:setup`)
 - [Codex CLI](https://github.com/openai/codex) installed and authenticated
 - Claude Code CLI
-
-## Credits
-
-Bundles [OpenAI Codex plugin](https://github.com/openai/codex) v1.0.4 by OpenAI. See `LICENSE.codex` and `NOTICE`.

@@ -1,9 +1,9 @@
 {
   "name": "cc-codex-workflow",
-  "version": "1.0.0",
-  "description": "Structured codex workflow with bundled Codex: Plan → Implement → Review → Commit. Short aliases (/cx, /cxw), auto/manual mode toggle, heterogeneous review.",
+  "version": "1.1.0",
+  "description": "Structured codex workflow: Plan → Implement → Review → Commit. Short aliases (/cx, /cxw), auto/manual mode toggle, heterogeneous review. Requires codex plugin.",
   "author": {
-    "name": "liwenquan"
+    "name": "liwenquantop-dot"
   },
   "hooks": {
     "UserPromptSubmit": [
@@ -13,39 +13,6 @@
             "type": "command",
             "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/codex-workflow-reminder.sh\"",
             "timeout": 5
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/session-lifecycle-hook.mjs\" SessionStart",
-            "timeout": 5
-          }
-        ]
-      }
-    ],
-    "SessionEnd": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/session-lifecycle-hook.mjs\" SessionEnd",
-            "timeout": 5
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/stop-review-gate-hook.mjs\"",
-            "timeout": 900
           }
         ]
       }
