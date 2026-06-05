@@ -2,7 +2,7 @@
 
 Structured codex workflow plugin for Claude Code. Enforces Plan → Implement → Review → Commit with heterogeneous review (Claude reviews Codex, Codex reviews Claude).
 
-> **Naming note**: The plugin name is `cc-codex-workflow`. `ccf` is only the command **namespace** (e.g. `/ccf:workflow`), not the plugin name. Don't pass `ccf` to `/plugin install`.
+> **Naming format**: `plugin@marketplace`. Plugin name is `ccf` (from `plugin.json`), marketplace name is `cc-codex-workflow` (repo name). So: `ccf@cc-codex-workflow`.
 
 ## Install
 
@@ -13,11 +13,9 @@ Structured codex workflow plugin for Claude Code. Enforces Plan → Implement �
 
 # 2. Install cc-codex-workflow
 /plugin marketplace add liwenquantop-dot/cc-codex-workflow
-# ↑ Because the marketplace contains a single plugin whose name equals the
-#   marketplace name, Claude Code auto-installs it. Skip step 3 in that case.
 
-# 3. (Only if auto-install did not run) Install explicitly
-/plugin install cc-codex-workflow@cc-codex-workflow
+# 3. Install explicitly (auto-install does NOT work — must run manually)
+/plugin install ccf@cc-codex-workflow
 
 # 4. Reload
 /reload-plugins
@@ -32,14 +30,14 @@ Structured codex workflow plugin for Claude Code. Enforces Plan → Implement �
 ### Verify install
 
 ```bash
-cat ~/.claude/plugins/installed_plugins.json | grep cc-codex-workflow
+cat ~/.claude/plugins/installed_plugins.json | grep ccf
 # Should show an entry with installedAt timestamp.
 ```
 
 ### Uninstall
 
 ```bash
-claude plugin uninstall cc-codex-workflow@cc-codex-workflow
+claude plugin uninstall ccf@cc-codex-workflow
 ```
 
 ## Commands
