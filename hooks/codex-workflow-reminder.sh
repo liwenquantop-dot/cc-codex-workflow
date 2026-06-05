@@ -25,7 +25,7 @@ fi
 
 if [[ "$MODE" == "cc-codex" ]]; then
   cat <<'EOF'
-CC-CODEX MODE — Every task MUST run full chain: Plan → Implement → Review → Build → Commit. Do NOT stop between phases. Use `/codex:rescue --write` for implementation. Direct Edit/Write on src/ only if: single-line fix, zero call sites, or user explicitly requested. Self-check before every Edit/Write on .java/.py/.js/.ts/.go/.rs files. Stop only on: build fail, CRITICAL review, irreversible op. Switch: /cxt. Status: /cxs.
+CC-CODEX MODE — Every task MUST run full chain: Plan → Implement → Review → Build → Commit. Do NOT stop between phases. Implement = `/codex:rescue --write` (Codex). `--write` is REQUIRED — without it Codex runs read-only and returns an empty diff with no file changes. Review = CLAUDE reads `git diff` directly — do NOT call `/cxr`, `/codex:review`, or `/codex:rescue` for the review step (same-model review defeats the cross-check). Codex only re-reviews if Claude makes direct fixes (Phase 3c) or for `/cxa` adversarial pass on high-risk code. Direct Edit/Write on src/ only if: single-line fix, zero call sites, or user explicitly requested. Self-check before every Edit/Write on .java/.py/.js/.ts/.go/.rs files. Stop only on: build fail, CRITICAL review, irreversible op. Switch: /cxt. Status: /cxs.
 EOF
 else
   cat <<'EOF'
