@@ -2,6 +2,8 @@
 
 Structured codex workflow plugin for Claude Code. Enforces Plan → Implement → Review → Commit with heterogeneous review (Claude reviews Codex, Codex reviews Claude).
 
+Includes bundled [OpenAI Codex](https://github.com/openai/codex) plugin — single install, zero extra dependencies.
+
 ## Install
 
 ```bash
@@ -18,13 +20,16 @@ claude install-plugin github:liwenquan/cc-codex-workflow
 | `/cxa` | Adversarial review |
 | `/cxt` | Toggle auto/manual mode |
 | `/cxs` | Show current status |
+| `/codex:rescue` | Direct Codex rescue (bundled) |
+| `/codex:review` | Direct Codex review (bundled) |
+| `/codex:setup` | Codex setup (bundled) |
 
 ## Modes
 
 - **AUTO** (`/cxt` to switch): Every task automatically runs the full chain
 - **MANUAL** (default): Use `/cxw` to trigger the full chain explicitly
 
-Config stored in `~/.claude/cc-codex-workflow.json`.
+Config stored in `~/.claude/codex-workflow.json`.
 
 ## How It Works
 
@@ -41,5 +46,9 @@ Same model writing and reviewing shares blind spots (confirmation bias). This wo
 
 ## Requirements
 
-- [codex plugin](https://github.com/openai/codex) (`/codex:rescue`, `/codex:review`)
+- [Codex CLI](https://github.com/openai/codex) installed and authenticated
 - Claude Code CLI
+
+## Credits
+
+Bundles [OpenAI Codex plugin](https://github.com/openai/codex) v1.0.4 by OpenAI. See `LICENSE.codex` and `NOTICE`.

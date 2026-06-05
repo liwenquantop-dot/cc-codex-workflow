@@ -1,22 +1,6 @@
 {
-  "name": "cc-codex-workflow",
-  "version": "1.0.0",
-  "description": "Structured codex workflow with bundled Codex: Plan → Implement → Review → Commit. Short aliases (/cx, /cxw), auto/manual mode toggle, heterogeneous review.",
-  "author": {
-    "name": "liwenquan"
-  },
+  "description": "Optional stop-time review gate for Codex Companion.",
   "hooks": {
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/codex-workflow-reminder.sh\"",
-            "timeout": 5
-          }
-        ]
-      }
-    ],
     "SessionStart": [
       {
         "hooks": [
