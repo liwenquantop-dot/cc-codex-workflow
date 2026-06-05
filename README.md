@@ -68,8 +68,8 @@ claude plugin uninstall codex@openai-codex
 
 | Layer | Mechanism | Effect |
 |---|---|---|
-| Reminder | `UserPromptSubmit` hook | Injects "CODEX WORKFLOW ACTIVE" + mode (AUTO/MANUAL) on every user turn so the rule stays in context across long sessions |
-| **Hard block** | `PreToolUse` hook (AUTO mode) | Cancels any direct `Edit` / `Write` / `NotebookEdit` on source files with `exit 2`, forcing the edit through `/codex:rescue --write`. Soft reminders alone drift over time — this guard does not |
+| Reminder | `UserPromptSubmit` hook | Injects the active mode banner (CC / CC-Codex) on every user turn so the rule stays in context across long sessions |
+| Soft guard | `PreToolUse` hook (CC-Codex mode) | Advisory stderr reminder on non-trivial `Edit` / `Write` / `NotebookEdit` of source files, nudging the edit toward `/codex:rescue --write`. Set `CCF_HARD_BLOCK=1` to upgrade to a hard `exit 2` block |
 | Commands | `/ccf:*` slash commands | One-shot triggers for each workflow phase |
 
 No editing of `~/.claude/settings.json` is required — the plugin registers everything through `.claude-plugin/plugin.json`.
@@ -84,7 +84,7 @@ No editing of `~/.claude/settings.json` is required — the plugin registers eve
 | `/ccf:implement` | Implement only (`/codex:rescue --write`) |
 | `/ccf:code-review` | Code review (`/codex:review`) |
 | `/ccf:adversarial-review` | Adversarial review (`/codex:adversarial-review`) |
-| `/ccf:toggle-mode` | Toggle AUTO ↔ MANUAL |
+| `/ccf:toggle-mode` | Toggle CC ↔ CC-Codex |
 | `/ccf:workflow-status` | Show current mode + config |
 
 ### Short aliases (optional)
@@ -105,23 +105,26 @@ Put thin wrapper commands in `~/.claude/commands/` for shorter names:
 ## Modes
 
 Config: `~/.claude/codex-workflow.json`. Toggle with `/ccf:toggle-mode`.
+Stored as `{"mode": "cc"}` or `{"mode": "cc-codex"}`. Legacy values `"manual"` / `"auto"` are still accepted and treated as `cc` / `cc-codex`.
 
-### AUTO
+### CC (default)
 
-- Every task automatically runs the full chain.
-- `PreToolUse` guard **hard-blocks** direct `Edit` / `Write` / `NotebookEdit` on source extensions:
+- Plain Claude Code behavior: edit source directly, no enforced chain.
+- Opt into Codex per-task via `/cxw` (full chain) or `/codex:rescue --write` (single Implement step).
+- `PreToolUse` guard is a no-op.
+
+### CC-Codex
+
+- Every task automatically runs the full chain (Plan → Implement → Review → Build → Commit).
+- `PreToolUse` guard emits an advisory stderr reminder on non-trivial `Edit` / `Write` / `NotebookEdit` of source extensions:
   `.py .js .jsx .ts .tsx .go .rs .java .kt .swift .c .cpp .h .hpp .cs .rb .php .lua .dart .sh .bash .vue .svelte .sql .graphql .proto .ipynb` and more.
 - Exempt: `.claude/`, `.claude-plugin/`, `.codex/`, `.github/`, `docs/`, `README*`, `CLAUDE.md`, `*.md`, `*.json`, `*.yaml`, `*.toml`, and unknown extensions (e.g. `Makefile`, `Dockerfile`).
-- Blocked tool call returns a stderr message instructing the model to use `/codex:rescue --write`.
+- Trivial Edits (≤ `CCF_EDIT_LINE_THRESHOLD`, default 10) are silent.
+- Set `CCF_HARD_BLOCK=1` to upgrade the reminder into a hard `exit 2` block.
 
-### MANUAL (default)
+### Why a reminder at all?
 
-- No hard block. Use `/ccf:workflow` to trigger the full chain explicitly.
-- Reminder still injected each turn.
-
-### Why hard-block?
-
-`UserPromptSubmit` reminders are soft — Claude drifts away from them in long sessions and may rationalize "this is a single-line fix" to bypass the rule. `PreToolUse` cancels the tool call outright (`exit 2`), making the workflow non-bypassable when AUTO is on.
+`UserPromptSubmit` reminders are soft — Claude can drift in long sessions and rationalize "this is a single-line fix" to skip the chain. The `PreToolUse` advisory keeps the rule in sight at the moment of edit; `CCF_HARD_BLOCK=1` makes it non-bypassable when you want the previous strict behavior.
 
 ---
 

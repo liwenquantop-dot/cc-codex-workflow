@@ -68,8 +68,8 @@ claude plugin uninstall codex@openai-codex
 
 | 层 | 机制 | 效果 |
 |---|---|---|
-| 提醒 | `UserPromptSubmit` hook | 每轮用户输入注入 "CODEX WORKFLOW ACTIVE" + 当前模式（AUTO/MANUAL），让规则在长会话中始终留在 context |
-| **硬阻断** | `PreToolUse` hook（AUTO 模式） | 任何直接的 `Edit` / `Write` / `NotebookEdit` 源码操作被 `exit 2` 取消，强制改走 `/codex:rescue --write`。软提醒会漂移，硬阻断不会 |
+| 提醒 | `UserPromptSubmit` hook | 每轮用户输入注入当前模式（CC / CC-Codex）横幅，让规则在长会话中始终留在 context |
+| 软守卫 | `PreToolUse` hook（CC-Codex 模式） | 对源码文件的非平凡 `Edit` / `Write` / `NotebookEdit` 输出建议（stderr），引导改走 `/codex:rescue --write`。设 `CCF_HARD_BLOCK=1` 升级为硬阻断（`exit 2`） |
 | 命令 | `/ccf:*` slash 命令 | 各阶段一键触发 |
 
 不需要编辑 `~/.claude/settings.json` — 插件通过 `.claude-plugin/plugin.json` 注册全部 hook。
@@ -84,7 +84,7 @@ claude plugin uninstall codex@openai-codex
 | `/ccf:implement` | 仅实施（等价 `/codex:rescue --write`） |
 | `/ccf:code-review` | 代码审查（等价 `/codex:review`） |
 | `/ccf:adversarial-review` | 对抗式审查（等价 `/codex:adversarial-review`） |
-| `/ccf:toggle-mode` | 切换 AUTO ↔ MANUAL |
+| `/ccf:toggle-mode` | 切换 CC ↔ CC-Codex |
 | `/ccf:workflow-status` | 查看当前模式 + 配置 |
 
 ### 短别名（可选）
@@ -105,23 +105,26 @@ claude plugin uninstall codex@openai-codex
 ## 模式
 
 配置：`~/.claude/codex-workflow.json`。用 `/ccf:toggle-mode` 切换。
+存为 `{"mode": "cc"}` 或 `{"mode": "cc-codex"}`。旧值 `"manual"` / `"auto"` 仍然兼容，分别等价于 `cc` / `cc-codex`。
 
-### AUTO
+### CC（默认）
 
-- 每个任务自动跑完整链。
-- `PreToolUse` 守卫**硬阻断**对源码扩展名的直接 `Edit` / `Write` / `NotebookEdit`：
+- 纯 Claude Code 行为：直接改源码，不强制走链。
+- 按需走 Codex：`/cxw` 跑完整链，或 `/codex:rescue --write` 只跑 Implement。
+- `PreToolUse` 守卫不动作。
+
+### CC-Codex
+
+- 每个任务自动跑完整链（Plan → Implement → Review → Build → Commit）。
+- `PreToolUse` 守卫对源码扩展名的非平凡 `Edit` / `Write` / `NotebookEdit` 输出建议（stderr）：
   `.py .js .jsx .ts .tsx .go .rs .java .kt .swift .c .cpp .h .hpp .cs .rb .php .lua .dart .sh .bash .vue .svelte .sql .graphql .proto .ipynb` 等。
 - 豁免：`.claude/`、`.claude-plugin/`、`.codex/`、`.github/`、`docs/`、`README*`、`CLAUDE.md`、`*.md`、`*.json`、`*.yaml`、`*.toml`，以及未知扩展名（如 `Makefile`、`Dockerfile`）。
-- 被阻断的工具调用返回 stderr 提示，引导模型改用 `/codex:rescue --write`。
+- 平凡 Edit（`CCF_EDIT_LINE_THRESHOLD`，默认 10 行以内）静默放行。
+- 设 `CCF_HARD_BLOCK=1` 把建议升级成硬阻断（`exit 2`）。
 
-### MANUAL（默认）
+### 为什么还要有这个提醒？
 
-- 不硬阻断。用 `/ccf:workflow` 显式触发完整链。
-- 每轮仍注入提醒。
-
-### 为什么要硬阻断？
-
-`UserPromptSubmit` 提醒是软约束 — 长会话里 Claude 会漂移，会自我说服"这只是单行修复"绕过规则。`PreToolUse` 直接取消工具调用（`exit 2`），AUTO 开启时工作流真正不可绕过。
+`UserPromptSubmit` 提醒是软约束 — 长会话里 Claude 会漂移，会自我说服"这只是单行修复"跳过链。`PreToolUse` 建议在编辑发生的当下再次提示规则；想恢复严格行为就设 `CCF_HARD_BLOCK=1`。
 
 ---
 

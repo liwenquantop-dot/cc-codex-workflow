@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# PreToolUse hook — soft reminder for direct Edit/Write/NotebookEdit on source files when AUTO mode.
+# PreToolUse hook — soft reminder for direct Edit/Write/NotebookEdit on source files in CC-Codex mode.
 # Never blocks. Emits stderr advice so Claude self-corrects toward /codex:rescue when warranted.
 #
 # Exit codes per Claude Code hook protocol:
@@ -11,20 +11,25 @@
 set -u
 
 CONFIG="$HOME/.claude/codex-workflow.json"
-MODE="manual"
+MODE="cc"
 
-# Read mode (default manual if config missing or unreadable).
+# Read mode (default cc if config missing or unreadable).
+# Legacy values "auto"/"manual" map to "cc-codex"/"cc".
 if [[ -f "$CONFIG" ]]; then
-  VAL=$(python3 -c "import json,sys
+  VAL=$(python3 -c "
+import json
 try:
-  print(json.load(open('$CONFIG')).get('mode','manual'))
+  m = json.load(open('$CONFIG')).get('mode','cc')
 except Exception:
-  print('manual')" 2>/dev/null)
+  m = 'cc'
+m = {'auto': 'cc-codex', 'manual': 'cc'}.get(m, m)
+print(m)
+" 2>/dev/null)
   [[ -n "${VAL:-}" ]] && MODE="$VAL"
 fi
 
-# In manual mode this hook does nothing — user already opts in via /ccf:workflow.
-if [[ "$MODE" != "auto" ]]; then
+# In CC mode this hook does nothing — user opts into the chain per-task via /cxw or /codex:rescue.
+if [[ "$MODE" != "cc-codex" ]]; then
   exit 0
 fi
 
@@ -75,7 +80,7 @@ BASENAME="${FPATH##*/}"
 EXT="${BASENAME##*.}"
 EXT_LC=$(printf '%s' "$EXT" | tr '[:upper:]' '[:lower:]')
 
-# --- Exemptions: these paths are always silent even in AUTO mode ---
+# --- Exemptions: these paths are always silent even in CC-Codex mode ---
 
 case "$FPATH" in
   */.claude/*|*/.claude-plugin/*|*/.codex/*|*/.github/*) exit 0 ;;
@@ -106,7 +111,7 @@ case "$EXT_LC" in
   ipynb)
     if [[ "${CCF_HARD_BLOCK:-0}" == "1" ]]; then
       cat >&2 <<EOF
-BLOCKED by ccf workflow guard (mode: AUTO, CCF_HARD_BLOCK=1).
+BLOCKED by ccf workflow guard (mode: CC-Codex, CCF_HARD_BLOCK=1).
 
 Tool: $TOOL
 Target: $FPATH
@@ -121,7 +126,7 @@ EOF
     fi
 
     cat >&2 <<EOF
-[ccf workflow reminder — AUTO mode]
+[ccf workflow reminder — CC-Codex mode]
 Tool: $TOOL  Target: $FPATH$([[ "$TOOL" == "Edit" && "${EDIT_LINES:-0}" -gt 0 ]] && printf '  (~%s lines)' "$EDIT_LINES")
 
 Non-trivial source edit detected. Prefer the Codex chain when this edit

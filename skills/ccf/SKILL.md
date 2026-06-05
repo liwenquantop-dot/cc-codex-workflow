@@ -2,7 +2,7 @@
 name: ccf
 description: >
   Structured codex workflow with Plan → Implement → Review → Commit chain.
-  Supports auto mode (every task runs full chain) and manual mode (/cxw to trigger).
+  Supports CC mode (plain Claude Code, opt in per-task) and CC-Codex mode (every task auto-runs the chain).
   Short aliases: /cx (implement), /cxr (review), /cxa (adversarial review), /cxw (full chain).
   Heterogeneous review: Claude reviews Codex, Codex reviews Claude's direct fixes.
 ---
@@ -11,10 +11,10 @@ description: >
 
 ## Mode
 
-Active mode is set in `~/.claude/codex-workflow.json` (`"auto"` or `"manual"`) and injected each turn via UserPromptSubmit hook.
+Active mode is set in `~/.claude/codex-workflow.json` (`"cc"` or `"cc-codex"`; legacy `"manual"`/`"auto"` still accepted) and injected each turn via UserPromptSubmit hook.
 
-- **AUTO mode**: Every task runs full chain automatically. Do NOT stop between phases.
-- **MANUAL mode**: Default behavior is single-step. Use `/cxw` to trigger full chain explicitly.
+- **CC-Codex mode**: Every task runs full chain automatically through Codex. Do NOT stop between phases.
+- **CC mode** (default): Plain Claude Code behavior. Edit source directly. Opt into the chain per-task via `/cxw` or `/codex:rescue`.
 
 ## Commands
 
@@ -24,10 +24,10 @@ Active mode is set in `~/.claude/codex-workflow.json` (`"auto"` or `"manual"`) a
 | `/cx` | Implement only (codex:rescue --write) |
 | `/cxr` | Review only |
 | `/cxa` | Adversarial review |
-| `/cxt` | Toggle auto/manual mode |
+| `/cxt` | Toggle CC ↔ CC-Codex mode |
 | `/cxs` | Show current status |
 
-## Autonomous Execution (AUTO mode)
+## Autonomous Execution (CC-Codex mode)
 
 Run the full chain without stopping between phases.
 
