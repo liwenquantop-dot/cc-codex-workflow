@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "ccf",
+  "name": "cc-codex-workflow",
   "description": "Structured codex workflow for Claude Code. Plan → Implement → Review → Commit with heterogeneous review.",
   "owner": {
     "name": "liwenquantop-dot",
