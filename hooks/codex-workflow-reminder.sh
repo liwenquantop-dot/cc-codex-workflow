@@ -19,6 +19,6 @@ CODEX WORKFLOW ACTIVE — mode: AUTO. Every task MUST run full chain: Plan → I
 EOF
 else
   cat <<'EOF'
-CODEX WORKFLOW ACTIVE — mode: MANUAL. Source code edits → `/codex:rescue --write`. Direct Edit/Write on src/ only if: single-line fix, zero call sites, or user explicitly requested. Self-check before every Edit/Write on .java/.py/.js/.ts/.go/.rs files. Use `/cxw` to run full autonomous chain. Switch: /cxt. Status: /cxs.
+CODEX WORKFLOW IDLE — mode: MANUAL. Default Claude Code behavior: edit source directly, no enforced codex chain. Opt in per-task with `/cxw` (full Plan → Implement → Review → Build → Commit chain) or `/codex:rescue --write <task>` (single Codex implement step). Switch to AUTO (auto-chain every task): /cxt. Status: /cxs.
 EOF
 fi
