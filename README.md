@@ -7,7 +7,20 @@ Includes bundled [OpenAI Codex](https://github.com/openai/codex) plugin — sing
 ## Install
 
 ```bash
-claude install-plugin github:liwenquantop-dot/cc-codex-workflow
+# 1. Register marketplace
+/plugin marketplace add liwenquantop-dot/cc-codex-workflow
+
+# 2. Install plugin
+/plugin install cc-codex-workflow@cc-codex-workflow
+
+# 3. Reload plugins
+/reload-plugins
+
+# 4. Setup Codex (first time only)
+/codex:setup
+
+# 5. Verify
+/cxs
 ```
 
 ## Commands
