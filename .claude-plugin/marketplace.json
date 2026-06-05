@@ -8,7 +8,7 @@
   },
   "plugins": [
     {
-      "name": "cc-codex-workflow",
+      "name": "ccf",
       "description": "Codex workflow: Plan → Implement → Review → Commit. Auto/manual mode, heterogeneous review.",
       "source": "./",
       "category": "workflow"
