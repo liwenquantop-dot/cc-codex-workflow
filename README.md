@@ -7,7 +7,7 @@ Includes bundled [OpenAI Codex](https://github.com/openai/codex) plugin — sing
 ## Install
 
 ```bash
-claude install-plugin github:liwenquan/cc-codex-workflow
+claude install-plugin github:liwenquantop-dot/cc-codex-workflow
 ```
 
 ## Commands
