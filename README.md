@@ -2,9 +2,26 @@
 
 **English** | [中文](README.zh-CN.md)
 
-Structured Claude Code + Codex workflow plugin. Enforces **Plan → Implement → Review → Commit** with heterogeneous review (Claude reviews Codex's diffs, Codex reviews Claude's direct fixes).
+Claude Code + Codex collaboration workflow plugin. Enforces **Plan → Implement → Review → Commit** with heterogeneous review (Claude reviews Codex's diffs, Codex reviews Claude's direct fixes).
 
 > Naming: `plugin@marketplace` = `ccf@cc-codex-workflow`. `ccf` is the plugin name (from `plugin.json`); `cc-codex-workflow` is the marketplace/repo name.
+
+---
+
+## Claude Code vs Codex
+
+**Claude Code is the "architect"; Codex is the "programmer".** One figures out *what* to build, the other actually writes the code.
+
+| Role | Human analog | What it does | What it doesn't do |
+|---|---|---|---|
+| **Claude Code (main session)** | Senior engineer / tech lead | Read requirements, read code, plan, decompose tasks, review diffs, run tests, write commits, talk to humans | Doesn't touch source directly (except trivial one-liners) |
+| **Codex (subagent)** | High-output intern / contractor | Crank out code to spec, write large implementations, mechanical refactors | Doesn't plan, doesn't review its own output, doesn't talk to humans |
+
+**Why pair them:**
+
+1. **Heterogeneous review** — Same model writing and reviewing shares blind spots (confirmation bias on its own output). Claude (Opus) and Codex (GPT-5.x) have different architectures and different blind spots, so each catches what the other misses.
+2. **Division of labor** — Claude Code is best at understanding, reasoning, and judgment. Codex is best at high-fidelity code generation to spec. Using them backwards = having the architect write CRUD and the intern make design calls.
+3. **Economics** — On a Claude Pro subscription, Claude's tokens are most valuable on reasoning (plan/review). Outsourcing the "writing" to Codex maximizes throughput per dollar.
 
 ---
 
