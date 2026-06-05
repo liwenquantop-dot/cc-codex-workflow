@@ -126,9 +126,3 @@ Same model writing and reviewing shares blind spots — confirmation bias on its
 - [codex-plugin-cc](https://github.com/openai/codex-plugin-cc) — provides `/codex:rescue`, `/codex:review`, `/codex:setup`
 - [Codex CLI](https://github.com/openai/codex) — installed and authenticated (`/codex:setup` can install it for you)
 - Claude Code CLI
-
----
-
-## Reference
-
-Full workflow spec (Chinese): [Claude Code + Codex 协作工作流](https://mi.feishu.cn/wiki/TmPiwo6ILiUSFkkl1wpcAJUdnqg)
