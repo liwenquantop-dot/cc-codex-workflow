@@ -1,2 +1,0 @@
-description = "Show codex workflow status and config"
-prompt = "Read ~/.claude/codex-workflow.json and report:\n\n1. Mode: AUTO (every task runs full chain) / MANUAL (use /cxw to trigger)\n   If file does not exist, report MANUAL (default).\n2. Available commands: /cxw, /cx, /cxr, /cxa, /cxt, /cxs"

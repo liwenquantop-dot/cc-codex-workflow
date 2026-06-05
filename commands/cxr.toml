@@ -1,2 +1,0 @@
-description = "Codex review (short alias). /cxr or /cxr high"
-prompt = "Forward to /codex:review with user arguments.\n\nIf the user passed {{args}}, call:\n/codex:review {{args}}\n\nIf no arguments, call /codex:review with default effort."
