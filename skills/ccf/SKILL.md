@@ -61,3 +61,14 @@ This heterogeneous review catches more issues than same-model review.
 - Single-line fix (typo, import, constant)
 - Pure structural op with zero call sites
 - User explicitly requests direct edit
+
+## Critical: `--write` Flag Required for File Mutations
+
+`/codex:rescue` defaults to **read-only** sandbox. Without `--write`, Codex investigates and proposes a patch but **cannot modify files** — you get an empty diff and the working tree stays unchanged.
+
+- `/cx` (alias for `/ccf:implement`) hardcodes `--write`. Safe.
+- `/cxw` (full chain) routes implementation through `/cx`. Safe.
+- Raw `/codex:rescue <task>` → **read-only diagnosis only**. Files will NOT be edited.
+- Raw `/codex:rescue --write <task>` → writes allowed.
+
+**Rule**: If the goal is to modify files, never call `/codex:rescue` without `--write`. Prefer `/cx` or `/cxw` so the flag is automatic. If Codex returns an empty diff and the task was meant to mutate files, the missing `--write` flag is the first thing to check.
