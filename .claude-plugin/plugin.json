@@ -1,6 +1,6 @@
 {
   "name": "ccf",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Structured codex workflow: Plan → Implement → Review → Commit. Short aliases (/cx, /cxw), auto/manual mode toggle, heterogeneous review. AUTO mode emits PreToolUse reminders on non-trivial source edits (set CCF_HARD_BLOCK=1 to block). Requires codex plugin.",
   "author": {
     "name": "liwenquantop-dot"
