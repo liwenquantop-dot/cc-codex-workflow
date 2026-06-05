@@ -66,10 +66,14 @@ Create local commands in `~/.claude/commands/` for shorter names:
 
 ## Modes
 
-- **AUTO** (`/ccf:toggle-mode`): Every task automatically runs the full chain
-- **MANUAL** (default): Use `/ccf:workflow` to trigger the full chain explicitly
+- **AUTO** (`/ccf:toggle-mode`): Every task automatically runs the full chain. A `PreToolUse` hook **hard-blocks** direct `Edit`/`Write`/`NotebookEdit` on source files (`.py .js .ts .go .rs .java .kt .swift .c .cpp .rb .php .sh .vue .svelte .sql ...`), forcing delegation to `/codex:rescue --write`. Docs, configs, `.claude/`, `docs/`, `README*`, `CLAUDE.md`, and unknown extensions (e.g. `Makefile`) are exempt.
+- **MANUAL** (default): No hard block. Use `/ccf:workflow` to trigger the full chain explicitly.
 
-Config stored in `~/.claude/codex-workflow.json`.
+Config stored in `~/.claude/codex-workflow.json`. Toggle with `/ccf:toggle-mode`.
+
+### Why hard-block?
+
+The `UserPromptSubmit` reminder alone is a soft suggestion that Claude drifts away from in long sessions. The `PreToolUse` guard cancels the tool call outright with `exit 2`, so Claude is forced to re-route through Codex.
 
 ## How It Works
 

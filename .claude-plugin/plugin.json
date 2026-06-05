@@ -1,7 +1,7 @@
 {
   "name": "ccf",
-  "version": "1.1.0",
-  "description": "Structured codex workflow: Plan → Implement → Review → Commit. Short aliases (/cx, /cxw), auto/manual mode toggle, heterogeneous review. Requires codex plugin.",
+  "version": "1.2.0",
+  "description": "Structured codex workflow: Plan → Implement → Review → Commit. Short aliases (/cx, /cxw), auto/manual mode toggle, heterogeneous review. AUTO mode hard-blocks direct source edits via PreToolUse. Requires codex plugin.",
   "author": {
     "name": "liwenquantop-dot"
   },
@@ -12,6 +12,18 @@
           {
             "type": "command",
             "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/codex-workflow-reminder.sh\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/codex-workflow-guard.sh\"",
             "timeout": 5
           }
         ]
