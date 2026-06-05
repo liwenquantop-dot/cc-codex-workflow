@@ -1,5 +1,5 @@
 ---
-description: "Full codex workflow: Plan → Implement → Review → Commit. /cxw fix the bug"
+description: "CCF: Full workflow chain — Plan → Implement → Review → Build → Commit (/ccf:workflow)"
 argument-hint: "[task description]"
 ---
 
@@ -11,10 +11,10 @@ $ARGUMENTS
 ## Execution (autonomous, no pauses)
 
 1. **Plan**: Read relevant files. Decompose into concrete steps with file paths and line numbers.
-2. **Implement**: /ccf:rescue --write with the decomposed task. Verify git diff --stat is non-empty.
+2. **Implement**: /codex:rescue --write with the decomposed task. Verify git diff --stat is non-empty.
 3. **Review**: git diff to review all changes. Check correctness, edge cases, imports, secrets, regressions.
    - Trivial issues (typo, import): fix directly.
-   - Logic bugs: /ccf:rescue again with specific feedback (max 2 retries).
+   - Logic bugs: /codex:rescue again with specific feedback (max 2 retries).
    - After 2 retries still broken: escalate to user.
 4. **Build**: Run project build command (mvn compile or equivalent).
 5. **Commit**: Stage and commit with conventional commit message.

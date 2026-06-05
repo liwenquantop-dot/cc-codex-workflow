@@ -10,8 +10,8 @@ Structured codex workflow plugin for Claude Code. Enforces Plan → Implement �
 /plugin install codex@openai-codex
 
 # 2. Install ccf
-/plugin marketplace add liwenquantop-dot/ccf
-/plugin install ccf@ccf
+/plugin marketplace add liwenquantop-dot/cc-codex-workflow
+/plugin install ccf@cc-codex-workflow
 
 # 3. Reload
 /reload-plugins
@@ -20,38 +20,37 @@ Structured codex workflow plugin for Claude Code. Enforces Plan → Implement �
 /codex:setup
 
 # 5. Verify
-/ccf:cxs
+/ccf:workflow-status
 ```
 
 ## Commands
 
 | Command | Description |
 |---|---|
-| `/ccf:cxw` | Full chain: Plan → Implement → Review → Build → Commit |
-| `/ccf:cx` | Implement only (`/codex:rescue --write`) |
-| `/ccf:cxr` | Review only (`/codex:review`) |
-| `/ccf:cxa` | Adversarial review (`/codex:adversarial-review`) |
-| `/ccf:cxt` | Toggle auto/manual mode |
-| `/ccf:cxs` | Show current status |
+| `/ccf:workflow` | Full chain: Plan → Implement → Review → Build → Commit |
+| `/ccf:implement` | Implement only (`/codex:rescue --write`) |
+| `/ccf:code-review` | Code review (`/codex:review`) |
+| `/ccf:adversarial-review` | Adversarial review (`/codex:adversarial-review`) |
+| `/ccf:toggle-mode` | Toggle auto/manual mode |
+| `/ccf:workflow-status` | Show current status |
 
 ### Short Aliases (optional)
 
 Create local commands in `~/.claude/commands/` for shorter names:
 
 ```bash
-# ~/.claude/commands/cx.md
----
-description: "Codex implement (→ /ccf:cx)"
----
-Forward to /ccf:cx with arguments: $ARGUMENTS
+# ~/.claude/commands/cx.md → /ccf:implement
+# ~/.claude/commands/cxw.md → /ccf:workflow
+# ~/.claude/commands/cxr.md → /ccf:code-review
+# ~/.claude/commands/cxa.md → /ccf:adversarial-review
+# ~/.claude/commands/cxt.md → /ccf:toggle-mode
+# ~/.claude/commands/cxs.md → /ccf:workflow-status
 ```
-
-Repeat for `cxw.md`, `cxr.md`, `cxa.md`, `cxt.md`, `cxs.md`. Then use `/cx`, `/cxw`, etc.
 
 ## Modes
 
-- **AUTO** (`/cxt` to switch): Every task automatically runs the full chain
-- **MANUAL** (default): Use `/cxw` to trigger the full chain explicitly
+- **AUTO** (`/ccf:toggle-mode`): Every task automatically runs the full chain
+- **MANUAL** (default): Use `/ccf:workflow` to trigger the full chain explicitly
 
 Config stored in `~/.claude/codex-workflow.json`.
 
