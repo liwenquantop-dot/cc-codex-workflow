@@ -11,10 +11,10 @@ $ARGUMENTS
 ## Execution (autonomous, no pauses)
 
 1. **Plan**: Read relevant files. Decompose into concrete steps with file paths and line numbers.
-2. **Implement**: /cc-codex-workflow:rescue --write with the decomposed task. Verify git diff --stat is non-empty.
+2. **Implement**: /ccf:rescue --write with the decomposed task. Verify git diff --stat is non-empty.
 3. **Review**: git diff to review all changes. Check correctness, edge cases, imports, secrets, regressions.
    - Trivial issues (typo, import): fix directly.
-   - Logic bugs: /cc-codex-workflow:rescue again with specific feedback (max 2 retries).
+   - Logic bugs: /ccf:rescue again with specific feedback (max 2 retries).
    - After 2 retries still broken: escalate to user.
 4. **Build**: Run project build command (mvn compile or equivalent).
 5. **Commit**: Stage and commit with conventional commit message.

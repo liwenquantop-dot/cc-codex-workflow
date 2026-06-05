@@ -1,4 +1,4 @@
-# cc-codex-workflow
+# ccf
 
 Structured codex workflow plugin for Claude Code. Enforces Plan → Implement → Review → Commit with heterogeneous review (Claude reviews Codex, Codex reviews Claude).
 
@@ -9,9 +9,9 @@ Structured codex workflow plugin for Claude Code. Enforces Plan → Implement �
 /plugin marketplace add openai/codex-plugin-cc
 /plugin install codex@openai-codex
 
-# 2. Install cc-codex-workflow
-/plugin marketplace add liwenquantop-dot/cc-codex-workflow
-/plugin install cc-codex-workflow@cc-codex-workflow
+# 2. Install ccf
+/plugin marketplace add liwenquantop-dot/ccf
+/plugin install ccf@ccf
 
 # 3. Reload
 /reload-plugins
@@ -20,19 +20,19 @@ Structured codex workflow plugin for Claude Code. Enforces Plan → Implement �
 /codex:setup
 
 # 5. Verify
-/cc-codex-workflow:cxs
+/ccf:cxs
 ```
 
 ## Commands
 
 | Command | Description |
 |---|---|
-| `/cc-codex-workflow:cxw` | Full chain: Plan → Implement → Review → Build → Commit |
-| `/cc-codex-workflow:cx` | Implement only (`/codex:rescue --write`) |
-| `/cc-codex-workflow:cxr` | Review only (`/codex:review`) |
-| `/cc-codex-workflow:cxa` | Adversarial review (`/codex:adversarial-review`) |
-| `/cc-codex-workflow:cxt` | Toggle auto/manual mode |
-| `/cc-codex-workflow:cxs` | Show current status |
+| `/ccf:cxw` | Full chain: Plan → Implement → Review → Build → Commit |
+| `/ccf:cx` | Implement only (`/codex:rescue --write`) |
+| `/ccf:cxr` | Review only (`/codex:review`) |
+| `/ccf:cxa` | Adversarial review (`/codex:adversarial-review`) |
+| `/ccf:cxt` | Toggle auto/manual mode |
+| `/ccf:cxs` | Show current status |
 
 ### Short Aliases (optional)
 
@@ -41,9 +41,9 @@ Create local commands in `~/.claude/commands/` for shorter names:
 ```bash
 # ~/.claude/commands/cx.md
 ---
-description: "Codex implement (→ /cc-codex-workflow:cx)"
+description: "Codex implement (→ /ccf:cx)"
 ---
-Forward to /cc-codex-workflow:cx with arguments: $ARGUMENTS
+Forward to /ccf:cx with arguments: $ARGUMENTS
 ```
 
 Repeat for `cxw.md`, `cxr.md`, `cxa.md`, `cxt.md`, `cxs.md`. Then use `/cx`, `/cxw`, etc.
