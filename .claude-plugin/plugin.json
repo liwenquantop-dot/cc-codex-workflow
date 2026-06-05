@@ -1,5 +1,5 @@
 {
-  "name": "codex-workflow",
+  "name": "cc-codex-workflow",
   "version": "1.0.0",
   "description": "Structured codex workflow: Plan → Implement → Review → Commit. Short aliases (/cx, /cxw), auto/manual mode toggle, heterogeneous review.",
   "author": {

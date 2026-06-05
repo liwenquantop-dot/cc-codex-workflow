@@ -1,5 +1,5 @@
 ---
-name: codex-workflow
+name: cc-codex-workflow
 description: >
   Structured codex workflow with Plan → Implement → Review → Commit chain.
   Supports auto mode (every task runs full chain) and manual mode (/cxw to trigger).

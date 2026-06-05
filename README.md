@@ -1,11 +1,11 @@
-# codex-workflow
+# cc-codex-workflow
 
 Structured codex workflow plugin for Claude Code. Enforces Plan → Implement → Review → Commit with heterogeneous review (Claude reviews Codex, Codex reviews Claude).
 
 ## Install
 
 ```bash
-claude install-plugin github:liwenquan/codex-workflow
+claude install-plugin github:liwenquan/cc-codex-workflow
 ```
 
 ## Commands
@@ -24,7 +24,7 @@ claude install-plugin github:liwenquan/codex-workflow
 - **AUTO** (`/cxt` to switch): Every task automatically runs the full chain
 - **MANUAL** (default): Use `/cxw` to trigger the full chain explicitly
 
-Config stored in `~/.claude/codex-workflow.json`.
+Config stored in `~/.claude/cc-codex-workflow.json`.
 
 ## How It Works
 
